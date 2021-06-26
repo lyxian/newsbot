@@ -36,8 +36,7 @@ class Article(db.Model):
     def to_payload(self):
         return {
             'photo': self.image_url,
-            'caption': f'''<b>{self.title}</b>\n{self.excerpt}''',
-            # <a href="http://www.example.com/">inline URL</a>
+            'caption': f'''<b>{self.title}</b>\n{self.excerpt}\n<a href="{self.url}">Link Here</a>''',
         }
 
 class ArticleSchema(Schema):

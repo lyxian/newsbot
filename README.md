@@ -1,17 +1,16 @@
 # AIRFLOW (local) for NewsBot
 
-## TO-DO
+## DONE
 
 - setup repo
-- add shortCircuit for "working hours"
+
+## TO-DO
+
+- add shortCircuit for "working hours" (12am - 9am)
+- run dag based on TIME
+- query USER from cloud
 - improve Telegram message
-- host subscription bot on cloud
-
-##
-
-airflow connection add <conn_id> \
---conn-type sqlite
---conn-host $PWD/test.db
+- host subscription bot on cloud && setup DB there
 
 #Packages
 wheel

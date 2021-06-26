@@ -8,6 +8,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from Py.DAG.main import searchArticles, sendToTelegram
+import pendulum
 
 default_args = {
     'owner': 'Lyx',
@@ -27,10 +28,16 @@ with DAG(
     schedule_interval='@hourly',
     catchup=False,
 ) as dag:
+    check_hour = ShortCircuitOperator(
+        task_id='skip_if_offline',
+        python_callable=(lambda time: pendulum.parse(time).in_tz('Asia/Singapore').hour in [0, *range(9, 24)]),
+        op_kwargs={
+            'time': '{{ execution_date }}'
+        }
+    )
     search_articles = PythonOperator(
         task_id='search_articles',
         python_callable=searchArticles,
-        # op_kwargs=,
     )
     check_article = ShortCircuitOperator(
         task_id='skip_if_empty_article',
@@ -50,4 +57,4 @@ with DAG(
         python_callable=sendToTelegram,
     )
 
-search_articles >> check_article >> get_users >> check_user >> send_to_telegram
+check_hour >> search_articles >> check_article >> get_users >> check_user >> send_to_telegram

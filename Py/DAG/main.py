@@ -36,7 +36,7 @@ def searchArticles(ti):
         names = [article['name'] for article in articles]
         end = names.index(latest_article.name)
         
-        new_articles = sorted(articles[:end], key=lambda _: _['date'], reverse=True)
+        new_articles = sorted(articles[:end], key=lambda _: _['date'], reverse=False)
         try:
             for article in new_articles:
                 schema = ArticleSchema()
@@ -54,6 +54,7 @@ def searchArticles(ti):
 def sendToTelegram(ti):
     articles = ti.xcom_pull(key='new_articles', task_ids='search_articles')
     users = ti.xcom_pull(key='return_value', task_ids='select_query_user')
+    article_schema = ArticleSchema()
     for user in users:
         logging.info(f'Sending message to {user[1]}...')
         chat_id = user[0]
@@ -65,7 +66,7 @@ def sendToTelegram(ti):
             params = {
                 'chat_id': chat_id,
                 'parse_mode': 'HTML',
-                **article.to_payload
+                **article_schema.load(article).to_payload
             }
             response = requests.post(url=url, params=params)
             if response.ok:

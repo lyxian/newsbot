@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 from datetime import datetime
 import requests
-import json
 
 def content():
     url = 'https://www.mothership.sg'
@@ -47,16 +46,5 @@ def _get_user_prop(message_json: dict):
         'date_joined': datetime.fromtimestamp(message_json['date']).isoformat()
     }
 
-def save_json():
-    records = content()
-    for num in range(1,7):
-        records.extend(content_more(num))
-    try:
-        with open('.vscode/records.json', 'w+') as file:
-            file.write(json.dumps(records, indent=4))
-    except Exception as Exc:
-        print(Exc)
-
 if __name__ == '__main__':
-    save_json()
     pass
