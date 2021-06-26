@@ -1,0 +1,17 @@
+# 
+.env
+.venv
+.config
+.scripts
+__pycache__
+.pytest_cache
+
+airflow
+data
+logs
+airflow.db
+
+#
+.users
+.local
+.vscode
