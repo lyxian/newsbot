@@ -3,14 +3,17 @@
 ## DONE
 
 - setup repo
+- add shortCircuit for "working hours" (12am - 9am)
 
 ## TO-DO
 
-- add shortCircuit for "working hours" (12am - 9am)
-- run dag based on TIME
-- query USER from cloud
+- run dag based on TIME (current & previous)
 - improve Telegram message
-- host subscription bot on cloud && setup DB there
+- query USER from cloud
+- host subscription bot on cloud && setup DB there (!!scripting cloud telebot)
+- error bot + telegram msg error handling
+
+# PAUSED TO COMPLETE TELEBOT ON CLOUD
 
 #Packages
 wheel

@@ -72,7 +72,7 @@ def sendToTelegram(ti):
             if response.ok:
                 success_counter += 1
             else:
-                logging.info(f'{article.name} not sent to {user[1]}...')
+                logging.info(f'{article["name"]} not sent to {user[1]}...')
         
         if success_counter == len(articles):
             logging.info(f'All messages successfully sent!')

@@ -27,10 +27,11 @@ with DAG(
     default_args=default_args,
     schedule_interval='@hourly',
     catchup=False,
+    # render_template_as_native_obj=True,
 ) as dag:
     check_hour = ShortCircuitOperator(
         task_id='skip_if_offline',
-        python_callable=(lambda time: pendulum.parse(time).in_tz('Asia/Singapore').hour in [0, *range(9, 24)]),
+        python_callable=(lambda time: pendulum.parse(time).in_tz('Asia/Singapore').hour in [0, *range(8, 24)]),
         op_kwargs={
             'time': '{{ execution_date }}'
         }
