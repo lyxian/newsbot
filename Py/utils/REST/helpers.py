@@ -23,8 +23,11 @@ def _html_to_json(tag):
 
 # num VARIES from 1-6
 def content_more(num):
+    headers = {
+        'referer': 'https://mothership.sg/',
+    }
     url = 'https://www.mothership.sg/json/posts-{}.json'.format(num)
-    response = requests.get(url)
+    response = requests.get(url, headers=headers)
     records = _include_year(response.json())
     return records
 
