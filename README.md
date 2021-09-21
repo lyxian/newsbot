@@ -4,6 +4,9 @@
 
 - setup repo
 - add shortCircuit for "working hours" (12am - 9am)
+- add method to remove duplicates in `list of dictionary`
+- error handling for non-unique inputs << use set
+- incorrectly sorted articles after set << sort after set
 
 ## TO-DO
 
