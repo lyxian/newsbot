@@ -10,6 +10,9 @@
 
 ## TO-DO
 
+- add pytest -> unit-test
+- refactor article sorting and addition
+- ***
 - run dag based on TIME (current & previous)
 - improve Telegram message
 - query USER from cloud

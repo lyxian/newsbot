@@ -51,7 +51,7 @@ def searchArticles(ti):
     else:
         if True:
             # Remove duplicates in list of dictionary
-            articles = [dict(t) for t in {tuple(d.items()) for d in articles}]
+            articles = sorted([dict(t) for t in {tuple(d.items()) for d in articles}], key=lambda _: _['date'], reverse=False)
             
             try:
                 for article in articles:
