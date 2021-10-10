@@ -1,3 +1,4 @@
+from re import search
 from bs4 import BeautifulSoup
 from datetime import datetime
 import requests
@@ -7,58 +8,39 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from Database.models import Article, ArticleSchema
 
-def searchArticles():   # WIP
-    # Get latest article in DB
-    # Get recent articles from WEB
-    # Append to DB
-    
+def _searchArticles():
     def _check_name(response, name):
         return name in [i['name'] for i in response]
         
-    latest_article = Article.query.order_by(Article.date.desc())[5]
+    latest_article = Article.query.order_by(Article.date.desc()).first()
     articles = content()
     found = False
 
     if _check_name(articles, latest_article.name):
         found = True
+    else:
+        for num in range(1,7):
+            new_articles = content_more(num)
+            articles.extend(new_articles)
+            if _check_name(new_articles, latest_article.name):
+                # print(num)
+                found = True
+                break
 
+    # Include only new articles
     if found:
         names = [article['name'] for article in articles]
         end = names.index(latest_article.name)
+        articles = articles[:end]
         
-        # Remove duplicates in list of dictionary
-        new_articles = sorted([dict(t) for t in {tuple(d.items()) for d in articles[:end]}], key=lambda _: _['date'], reverse=False)
-        
-        return new_articles, '\n', vars(latest_article)
+    # Modify <article> to have timestamp
+    for article in articles:
+        article['timestamp'] = datetime.strptime(article['date'], '%B %d, %Y, %I:%M %p').timestamp()
 
-        try:
-            for article in new_articles:
-                schema = ArticleSchema()
-                db.session.add(schema.load(article))
-            db.session.commit()
-            logging.info(f'{len(new_articles)} new articles added to database successfully.')
-            ti.xcom_push(key='new_articles', value=new_articles)
-        except Exception as err:
-            print(err)
-    else:
-        return
-        if True:
-            # Remove duplicates in list of dictionary
-            articles = [dict(t) for t in {tuple(d.items()) for d in articles}]
-            
-            try:
-                for article in articles:
-                    schema = ArticleSchema()
-                    db.session.add(schema.load(article))
-                db.session.commit()
-                logging.info(f'{len(articles)} new articles added to database successfully.')
-                ti.xcom_push(key='new_articles', value=articles)
-            except Exception as err:
-                print(err)
-        else:
-            print('not found')
-            logging.info('Latest article not found...\nPlease check again...')
-    return
+    # Remove duplicates in list of dictionary
+    new_articles = sorted([dict(t) for t in {tuple(d.items()) for d in articles}], key=lambda _: _['timestamp'], reverse=False)
+    
+    return new_articles
 
 def content():
     url = 'https://www.mothership.sg'
@@ -108,4 +90,5 @@ def _get_user_prop(message_json: dict):
     }
 
 if __name__ == '__main__':
+    print(_searchArticles())
     pass
