@@ -12,6 +12,8 @@
 
 - add pytest -> unit-test
 - refactor article sorting and addition
+- fix daemon airflow server (rm airflow files)
+- deploy to AWS
 - ***
 - run dag based on TIME (current & previous)
 - improve Telegram message

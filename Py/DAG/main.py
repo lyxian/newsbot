@@ -8,6 +8,7 @@ from Telegram.main import getToken
 from utils.SQLite.query import sql_query, sql_table_columns
 from utils.REST.helpers import content, content_more
 
+from datetime import datetime
 import requests
 import logging
 
@@ -32,12 +33,17 @@ def searchArticles(ti):
                 # print(num)
                 found = True
                 break
+
+    # Modify <article> to have timestamp
+    for article in articles:
+        article['timestamp'] = datetime.strptime(article['date'], '%B %d, %Y, %I:%M %p').timestamp()
+
     if found:
         names = [article['name'] for article in articles]
         end = names.index(latest_article.name)
         
         # Remove duplicates in list of dictionary
-        new_articles = sorted([dict(t) for t in {tuple(d.items()) for d in articles[:end]}], key=lambda _: _['date'], reverse=False)
+        new_articles = sorted([dict(t) for t in {tuple(d.items()) for d in articles[:end]}], key=lambda _: _['timestamp'], reverse=False)
         
         try:
             for article in new_articles:
@@ -51,7 +57,7 @@ def searchArticles(ti):
     else:
         if True:
             # Remove duplicates in list of dictionary
-            articles = sorted([dict(t) for t in {tuple(d.items()) for d in articles}], key=lambda _: _['date'], reverse=False)
+            articles = sorted([dict(t) for t in {tuple(d.items()) for d in articles}], key=lambda _: _['timestamp'], reverse=False)
             
             try:
                 for article in articles:

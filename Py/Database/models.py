@@ -1,6 +1,6 @@
 from airflow.hooks.base import BaseHook
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, EXCLUDE
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 import sys
@@ -50,6 +50,7 @@ class ArticleSchema(Schema):
     # can include Meta in (parent) BaseSchema
     class Meta:
         datetimeformat = '%B %d, %Y, %I:%M %p'
+        unknown = EXCLUDE
 
     @post_load
     def return_object(self, data, **kwargs):
