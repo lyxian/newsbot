@@ -10,7 +10,7 @@ airflow
 data
 logs
 airflow.db
-test
+TEST
 
 #
 .users

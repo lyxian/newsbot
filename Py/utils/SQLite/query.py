@@ -13,7 +13,7 @@ def sql_query(database_path, cmd):
     if conn:
         cursorObj = conn.cursor()
         cursorObj.execute(cmd)
-        if 'LIMIT 1' in cmd.upper():
+        if cmd.upper().endswith('LIMIT 1'):
             data = cursorObj.fetchone()
         else:
             data = cursorObj.fetchall()
