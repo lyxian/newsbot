@@ -7,15 +7,16 @@
 - add method to remove duplicates in `list of dictionary`
 - error handling for non-unique inputs << use set
 - incorrectly sorted articles after set << sort after set
+- fix daemon airflow server (rm airflow files)
+- refactor article sorting and addition
 
 ## TO-DO
 
+- run dag based on TIME (current & previous) + practise using templates/jinjja
 - add pytest -> unit-test
-- refactor article sorting and addition
-- fix daemon airflow server (rm airflow files)
 - deploy to AWS
+- how to upgrade existing airflow version
 - ***
-- run dag based on TIME (current & previous)
 - improve Telegram message
 - query USER from cloud
 - host subscription bot on cloud && setup DB there (!!scripting cloud telebot)

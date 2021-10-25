@@ -10,7 +10,8 @@ airflow
 data
 logs
 airflow.db
-TEST
+TEST/data
+TEST/utils/tmp.py
 
 #
 .users
