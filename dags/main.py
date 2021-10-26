@@ -22,6 +22,11 @@ default_args = {
     'retry_delay': timedelta(minutes=1),
 }
 
+timestamps = {
+    'curr': '{{ ts }}',
+    'prev': '{{ prev_execution_date_success }}'
+}
+
 with DAG(
     dag_id='main',
     default_args=default_args,
@@ -39,6 +44,7 @@ with DAG(
     search_articles = PythonOperator(
         task_id='search_articles',
         python_callable=searchArticles,
+        templates_dict=timestamps,
     )
     check_article = ShortCircuitOperator(
         task_id='skip_if_empty_article',

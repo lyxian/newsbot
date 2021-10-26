@@ -9,10 +9,10 @@
 - incorrectly sorted articles after set << sort after set
 - fix daemon airflow server (rm airflow files)
 - refactor article sorting and addition
+- run dag based on TIME (current & previous) + practise using templates/jinjja
 
 ## TO-DO
 
-- run dag based on TIME (current & previous) + practise using templates/jinjja
 - add pytest -> unit-test
 - deploy to AWS
 - how to upgrade existing airflow version

@@ -8,7 +8,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from Database.models import Article, ArticleSchema
 
-def _searchArticles():
+def _searchArticles(curr, prev):
     def _check_name(response, name):
         return name in [i['name'] for i in response]
         
@@ -40,7 +40,11 @@ def _searchArticles():
     # Remove duplicates in list of dictionary
     new_articles = sorted([dict(t) for t in {tuple(d.items()) for d in articles}], key=lambda _: _['timestamp'], reverse=False)
     
-    return new_articles
+    # Filter by 'curr'/'prev' time
+    prev = prev.timestamp() # pendulum.parse(prev).in_tz(tz='Asia/Singapore').timestamp()
+    curr = curr.timestamp() # pendulum.parse(curr).in_tz(tz='Asia/Singapore').timestamp()
+
+    return [article for article in new_articles if prev < article['timestamp'] <= curr]
 
 def content():
     url = 'https://www.mothership.sg'
