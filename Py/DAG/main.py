@@ -16,7 +16,7 @@ def searchArticles(ti, templates_dict):
     curr_ts = pendulum.parse(templates_dict['curr']).in_tz(tz='Asia/Singapore')
     prev_ts = pendulum.parse(templates_dict['prev']).in_tz(tz='Asia/Singapore')
 
-    logging.info(f'Scanning articles from {prev_ts} -> {curr_ts}...')
+    logging.info(f'--------Scanning articles from {prev_ts} -> {curr_ts}--------\n')
     new_articles = _searchArticles(curr_ts, prev_ts)
     article_schema = ArticleSchema()
 
