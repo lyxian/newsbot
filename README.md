@@ -13,9 +13,11 @@
 
 ## TO-DO
 
+- how to upgrade existing airflow version
+- export data for clean installation
+  - change column to non-unique
 - add pytest -> unit-test
 - deploy to AWS
-- how to upgrade existing airflow version
 - ***
 - improve Telegram message
 - query USER from cloud

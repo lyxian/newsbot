@@ -36,7 +36,7 @@ with DAG(
 ) as dag:
     check_hour = ShortCircuitOperator(
         task_id='skip_if_offline',
-        python_callable=(lambda time: pendulum.parse(time).in_tz('Asia/Singapore').hour in [0, *range(8, 24)]),
+        python_callable=(lambda time: pendulum.parse(time).in_tz('Asia/Singapore').hour in [0, *range(7, 24)]),
         op_kwargs={
             'time': '{{ execution_date }}'
         }
